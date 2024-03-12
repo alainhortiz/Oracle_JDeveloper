@@ -22,6 +22,7 @@
         <xsd:element name="treeMode" type="xsd:string"/>
         <xsd:element name="subinventoryCode" type="xsd:string"/>
         <xsd:element name="locatorName" type="xsd:string"/>
+        <xsd:element name="concatenacion" type="xsd:string"/>
       </xsd:sequence>
     </xsd:complexType>
   </xsd:element>
