@@ -74,10 +74,14 @@
       <string v="oracle.sb.tooling.ide.core.projects.SbProjectSettings/sbContentSet"/>
       <string v="oracle.tip.tools.ide.ess.addin.ESSContentSetProvider/ess-content"/>
    </list>
-   <value n="defaultPackage" v="pocsoa"/>
+   <value n="defaultPackage" v="inv"/>
    <hash n="oracle.ide.model.TechnologyScopeConfiguration">
       <list n="technologyScope">
          <string v="SOA"/>
+         <string v="WSDL"/>
+         <string v="WSPolicy"/>
+         <string v="XML"/>
+         <string v="XML_SCHEMA"/>
       </list>
    </hash>
    <hash n="oracle.jdeveloper.compiler.OjcConfiguration">
@@ -207,8 +211,8 @@
       </list>
    </hash>
    <hash n="oracle.jdeveloper.model.J2eeSettings">
-      <value n="j2eeWebAppName" v="PoC_SOA-ParaPOCInvSCM-webapp"/>
-      <value n="j2eeWebContextRoot" v="PoC_SOA-ParaPOCInvSCM-context-root"/>
+      <value n="j2eeWebAppName" v="ParaPOCInvSCM-ParaPOCInvSCM-webapp"/>
+      <value n="j2eeWebContextRoot" v="ParaPOCInvSCM-ParaPOCInvSCM-context-root"/>
    </hash>
    <hash n="oracle.jdeveloper.model.PathsConfiguration">
       <hash n="javaContentSet">
@@ -310,4 +314,5 @@
          </list>
       </hash>
    </hash>
+   <value n="SCA_BPEL_FOLDER_PROPERTY_NAME" v="BPEL/"/>
 </jpr:project>

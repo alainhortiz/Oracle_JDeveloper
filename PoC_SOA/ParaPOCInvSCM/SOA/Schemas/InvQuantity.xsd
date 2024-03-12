@@ -1,0 +1,49 @@
+<?xml version= '1.0' encoding= 'UTF-8' ?>
+<xsd:schema elementFormDefault="qualified" targetNamespace="http://xmlns.oracle.com/apps/scm/inventory/materialAvailability/onhandQuantities/onhandQuantityServiceV2/"
+     sdoJava:package="oracle.apps.scm.inventory.materialAvailability.onhandQuantities.onhandQuantityServiceV2"
+     xmlns:sdoJava="commonj.sdo/java" xmlns="http://xmlns.oracle.com/apps/scm/inventory/materialAvailability/onhandQuantities/onhandQuantityServiceV2/"
+     xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <xsd:annotation>
+        <xsd:documentation xmlns:oer="http://xmlns.oracle.com/oer">
+            <name>On-Hand Quantity</name>
+            <description>View object to hold quantities</description>
+            <oer:attributes>
+                <oer:attribute description="Quantity On-Hand" name="QuantityOnHand"/>
+                <oer:attribute description="Reservable Quantity On-Hand" name="ReservableQuantityOnHand"/>
+                <oer:attribute description="Quantity Reserved" name="QuantityReserved"/>
+                <oer:attribute description="Quantity Suggested" name="QuantitySuggested"/>
+                <oer:attribute description="Available to Transact" name="AvailableToTransact"/>
+                <oer:attribute description="Available to Reserve" name="AvailableToReserve"/>
+                <oer:attribute description="Secondary Quantity On-Hand" name="SecondaryQuantityOnHand"/>
+                <oer:attribute description="Secondary Reservable Quantity On-Hand" name="SecondaryReservableQuantityOnHand"/>
+                <oer:attribute description="Secondary Quantity Reserved" name="SecondaryQuantityReserved"/>
+                <oer:attribute description="Secondary Quantity Suggested" name="SecondaryQuantitySuggested"/>
+                <oer:attribute description="Secondary Available to Transact" name="SecondaryAvailableToTransact"/>
+                <oer:attribute description="Secondary Available to Reserve" name="SecondaryAvailableToReserve"/>
+            </oer:attributes>
+        </xsd:documentation>
+    </xsd:annotation>
+    <xsd:import namespace="commonj.sdo/java" schemaLocation="sdoJava.xsd"/>
+    <xsd:complexType name="InvQuantity">
+        <xsd:annotation>
+            <xsd:appinfo source="http://xmlns.oracle.com/adf/svc/metadata/">
+                <key xmlns="http://xmlns.oracle.com/adf/svc/metadata/"/>
+            </xsd:appinfo>
+        </xsd:annotation>
+        <xsd:sequence>
+            <xsd:element minOccurs="0" name="QuantityOnHand" nillable="true" type="xsd:decimal"/>
+            <xsd:element minOccurs="0" name="ReservableQuantityOnHand" nillable="true" type="xsd:decimal"/>
+            <xsd:element minOccurs="0" name="QuantityReserved" nillable="true" type="xsd:decimal"/>
+            <xsd:element minOccurs="0" name="QuantitySuggested" nillable="true" type="xsd:decimal"/>
+            <xsd:element minOccurs="0" name="AvailableToTransact" nillable="true" type="xsd:decimal"/>
+            <xsd:element minOccurs="0" name="AvailableToReserve" nillable="true" type="xsd:decimal"/>
+            <xsd:element minOccurs="0" name="SecondaryQuantityOnHand" nillable="true" type="xsd:decimal"/>
+            <xsd:element minOccurs="0" name="SecondaryReservableQuantityOnHand" nillable="true" type="xsd:decimal"/>
+            <xsd:element minOccurs="0" name="SecondaryQuantityReserved" nillable="true" type="xsd:decimal"/>
+            <xsd:element minOccurs="0" name="SecondaryQuantitySuggested" nillable="true" type="xsd:decimal"/>
+            <xsd:element minOccurs="0" name="SecondaryAvailableToTransact" nillable="true" type="xsd:decimal"/>
+            <xsd:element minOccurs="0" name="SecondaryAvailableToReserve" nillable="true" type="xsd:decimal"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="invQuantity" type="InvQuantity"/>
+</xsd:schema>

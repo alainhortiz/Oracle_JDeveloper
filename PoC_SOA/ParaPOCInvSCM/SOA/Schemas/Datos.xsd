@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="windows-1252" ?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:datos="http://www.datos.org"
+            targetNamespace="http://www.datos.org" elementFormDefault="qualified">
+  <xsd:element name="request">
+    <xsd:annotation>
+      <xsd:documentation>A sample element</xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element name="xi_warehouse" type="xsd:string"/>
+        <xsd:element name="xi_product_code" type="xsd:string"/>
+        <xsd:element name="xi_subinventory" type="xsd:string"/>
+        <xsd:element name="external_id" type="xsd:string"/>
+        <xsd:element name="quantity" type="xsd:string" minOccurs="0" />
+        <xsd:element name="inventory_quantity" type="xsd:int" minOccurs="0" /> 
+        <xsd:element name="xi_recovery_equipment" type="xsd:string" minOccurs="0" />
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:element name="response">
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element name="id" type="xsd:int"/>
+        <xsd:element name="codRespuesta" type="xsd:string"/>
+        <xsd:element name="descripcion" type="xsd:string"/>
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+</xsd:schema>

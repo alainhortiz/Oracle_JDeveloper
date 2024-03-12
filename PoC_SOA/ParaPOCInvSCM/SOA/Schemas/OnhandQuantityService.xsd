@@ -1,0 +1,147 @@
+<?xml version= '1.0' encoding= 'UTF-8' ?>
+<schema elementFormDefault="qualified" targetNamespace="http://xmlns.oracle.com/apps/scm/inventory/materialAvailability/onhandQuantities/onhandQuantityServiceV2/types/"
+     xmlns:ns0="http://xmlns.oracle.com/adf/svc/types/" xmlns:ns1="http://xmlns.oracle.com/apps/scm/inventory/materialAvailability/onhandQuantities/onhandQuantityServiceV2/"
+     xmlns:tns="http://xmlns.oracle.com/apps/scm/inventory/materialAvailability/onhandQuantities/onhandQuantityServiceV2/types/"
+     xmlns="http://www.w3.org/2001/XMLSchema">
+    <import namespace="http://xmlns.oracle.com/apps/scm/inventory/materialAvailability/onhandQuantities/onhandQuantityServiceV2/"
+         schemaLocation="InvQuantity.xsd"/>
+    <import namespace="http://xmlns.oracle.com/adf/svc/types/" schemaLocation="BC4JService.xsd"/>
+    <element name="query">
+        <complexType>
+            <sequence>
+                <element name="organizationId" type="long"/>
+                <element name="inventoryItemId" type="long"/>
+                <element name="treeMode" type="int"/>
+                <element name="isRevisionControl" type="boolean"/>
+                <element name="isLotControl" type="boolean"/>
+                <element name="gradeCode" nillable="true" type="string"/>
+                <element name="assetSubOnly" nillable="true" type="boolean"/>
+                <element name="demandSrcTypeId" type="long"/>
+                <element name="demandSrcHdrId" nillable="true" type="long"/>
+                <element name="demandSrcLineId" nillable="true" type="long"/>
+                <element name="demandSrcName" nillable="true" type="string"/>
+                <element name="lotExpirationDate" nillable="true" type="ns0:date-Date"/>
+                <element name="onhandSource" type="int"/>
+                <element name="revision" nillable="true" type="string"/>
+                <element name="lotNumber" nillable="true" type="string"/>
+                <element name="subinventoryCode" nillable="true" type="string"/>
+                <element name="locatorId" nillable="true" type="long"/>
+                <element name="tsfrSubCode" nillable="true" type="string"/>
+                <element name="tsfrLocId" nillable="true" type="long"/>
+            </sequence>
+        </complexType>
+    </element>
+    <element name="queryResponse">
+        <complexType>
+            <sequence>
+                <element maxOccurs="unbounded" minOccurs="0" name="result" type="decimal"/>
+            </sequence>
+        </complexType>
+    </element>
+    <element name="queryAsync">
+        <complexType>
+            <sequence>
+                <element name="organizationId" type="long"/>
+                <element name="inventoryItemId" type="long"/>
+                <element name="treeMode" type="int"/>
+                <element name="isRevisionControl" type="boolean"/>
+                <element name="isLotControl" type="boolean"/>
+                <element name="gradeCode" nillable="true" type="string"/>
+                <element name="assetSubOnly" nillable="true" type="boolean"/>
+                <element name="demandSrcTypeId" type="long"/>
+                <element name="demandSrcHdrId" nillable="true" type="long"/>
+                <element name="demandSrcLineId" nillable="true" type="long"/>
+                <element name="demandSrcName" nillable="true" type="string"/>
+                <element name="lotExpirationDate" nillable="true" type="ns0:date-Date"/>
+                <element name="onhandSource" type="int"/>
+                <element name="revision" nillable="true" type="string"/>
+                <element name="lotNumber" nillable="true" type="string"/>
+                <element name="subinventoryCode" nillable="true" type="string"/>
+                <element name="locatorId" nillable="true" type="long"/>
+                <element name="tsfrSubCode" nillable="true" type="string"/>
+                <element name="tsfrLocId" nillable="true" type="long"/>
+            </sequence>
+        </complexType>
+    </element>
+    <element name="queryAsyncResponse">
+        <complexType>
+            <sequence>
+                <element maxOccurs="unbounded" minOccurs="0" name="result" type="decimal"/>
+            </sequence>
+        </complexType>
+    </element>
+    <element name="queryAllInventory">
+        <complexType>
+            <sequence>
+                <element name="organizationCode" nillable="true" type="string"/>
+                <element name="organizationId" nillable="true" type="long"/>
+                <element name="itemName" nillable="true" type="string"/>
+                <element name="inventoryItemId" nillable="true" type="long"/>
+                <element name="treeMode" type="int"/>
+                <element name="gradeCode" nillable="true" type="string"/>
+                <element name="assetSubOnly" nillable="true" type="boolean"/>
+                <element name="demandSrcTypeId" type="long"/>
+                <element name="demandSrcHdrId" nillable="true" type="long"/>
+                <element name="demandSrcLineId" nillable="true" type="long"/>
+                <element name="demandSrcName" nillable="true" type="string"/>
+                <element name="excludeLotsAfterExpDate" nillable="true" type="ns0:date-Date"/>
+                <element name="subinventoryType" type="int"/>
+                <element name="revision" nillable="true" type="string"/>
+                <element name="lotNumber" nillable="true" type="string"/>
+                <element name="subinventoryCode" nillable="true" type="string"/>
+                <element name="locatorName" nillable="true" type="string"/>
+                <element name="locatorId" nillable="true" type="long"/>
+                <element name="owningEntityCode" nillable="true" type="string"/>
+                <element name="prcBUName" nillable="true" type="string"/>
+                <element name="vendorName" nillable="true" type="string"/>
+                <element name="vendorNumber" nillable="true" type="string"/>
+                <element name="consignmentAgreementNumber" nillable="true" type="string"/>
+                <element name="owningEntityId" nillable="true" type="long"/>
+            </sequence>
+        </complexType>
+    </element>
+    <element name="queryAllInventoryResponse">
+        <complexType>
+            <sequence>
+                <element name="result" type="ns1:InvQuantity"/>
+            </sequence>
+        </complexType>
+    </element>
+    <element name="queryAllInventoryAsync">
+        <complexType>
+            <sequence>
+                <element name="organizationCode" nillable="true" type="string"/>
+                <element name="organizationId" nillable="true" type="long"/>
+                <element name="itemName" nillable="true" type="string"/>
+                <element name="inventoryItemId" nillable="true" type="long"/>
+                <element name="treeMode" type="int"/>
+                <element name="gradeCode" nillable="true" type="string"/>
+                <element name="assetSubOnly" nillable="true" type="boolean"/>
+                <element name="demandSrcTypeId" type="long"/>
+                <element name="demandSrcHdrId" nillable="true" type="long"/>
+                <element name="demandSrcLineId" nillable="true" type="long"/>
+                <element name="demandSrcName" nillable="true" type="string"/>
+                <element name="excludeLotsAfterExpDate" nillable="true" type="ns0:date-Date"/>
+                <element name="subinventoryType" type="int"/>
+                <element name="revision" nillable="true" type="string"/>
+                <element name="lotNumber" nillable="true" type="string"/>
+                <element name="subinventoryCode" nillable="true" type="string"/>
+                <element name="locatorName" nillable="true" type="string"/>
+                <element name="locatorId" nillable="true" type="long"/>
+                <element name="owningEntityCode" nillable="true" type="string"/>
+                <element name="prcBUName" nillable="true" type="string"/>
+                <element name="vendorName" nillable="true" type="string"/>
+                <element name="vendorNumber" nillable="true" type="string"/>
+                <element name="consignmentAgreementNumber" nillable="true" type="string"/>
+                <element name="owningEntityId" nillable="true" type="long"/>
+            </sequence>
+        </complexType>
+    </element>
+    <element name="queryAllInventoryAsyncResponse">
+        <complexType>
+            <sequence>
+                <element name="result" type="ns1:InvQuantity"/>
+            </sequence>
+        </complexType>
+    </element>
+</schema>

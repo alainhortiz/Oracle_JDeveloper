@@ -1,0 +1,865 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions
+     name="OnhandQuantityService"
+     targetNamespace="http://xmlns.oracle.com/apps/scm/inventory/materialAvailability/onhandQuantities/onhandQuantityServiceV2/"
+     xmlns:plnk="http://schemas.xmlsoap.org/ws/2003/05/partner-link/"
+     xmlns:errors="http://xmlns.oracle.com/adf/svc/errors/"
+     xmlns:orafault="http://xmlns.oracle.com/oracleas/schema/oracle-fault-11_0"
+     xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+     xmlns:tns="http://xmlns.oracle.com/apps/scm/inventory/materialAvailability/onhandQuantities/onhandQuantityServiceV2/"
+     xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+     xmlns:types="http://xmlns.oracle.com/apps/scm/inventory/materialAvailability/onhandQuantities/onhandQuantityServiceV2/types/"
+    >
+    <wsdl:documentation xmlns:oer="http://xmlns.oracle.com/oer">
+        <name>Inventory Availability Version 2</name>
+        <description>The details about quantity information in inventory, such as
+            quantity on hand, quantity reserved against a demand, quantity
+            available to transact, and available to reserve.</description>
+        <docCategories>
+            <category>External</category>
+        </docCategories>
+        <oer:lifecycle>Active</oer:lifecycle>
+        <oer:compatibility>Supported - Backward Compatibility Assured</oer:compatibility>
+        <oer:category name="lba">
+            <value>ScmTop-SCM</value>
+            <value>ScmTop-SCM : InvTop-Inventory</value>
+            <value>ScmTop-SCM : InvTop-Inventory : InvMaterialAvailability-Material
+                Availability</value>
+            <value>ScmTop-SCM : InvTop-Inventory : InvMaterialAvailability-Material
+                Availability : InvOnhandQuantities-On-Hand Quantities</value>
+        </oer:category>
+        <oer:category name="lbo">
+            <value>SCM-SCM : INV-Inventory Management : INV_ONHAND_QUANTITY-Onhand
+                Quantity</value>
+        </oer:category>
+        <oer:operation name="query">
+            <description>Operation to query the inventory on-hand and availability
+                information</description>
+            <oer:parameters>
+                <oer:parameter name="organizationId" description="Organization identifier"/>
+                <oer:parameter name="inventoryItemId" description="Inventory item identifier"/>
+                <oer:parameter name="treeMode" description="Parameter to specify the mode in which the tree has to be created; 1 indicates Reservation mode, 2 indicates Transaction mode, 4 indicates Transfer to Regular mode and 5 indicates Transfer to Consigned mode."/>
+                <oer:parameter name="isRevisionControl" description="Parameter to specify if item revisions should be part of the tree"/>
+                <oer:parameter name="isLotControl" description="Parameter to specify if item lots should be part of the tree"/>
+                <oer:parameter name="gradeCode" description="Lot Grade Code"/>
+                <oer:parameter name="assetSubOnly" description="Parameter to specify if only the asset subinventories should be while creating the tree"/>
+                <oer:parameter name="demandSrcTypeId" description="Demand source type identifier"/>
+                <oer:parameter name="demandSrcHdrId" description="Demand source header identifier"/>
+                <oer:parameter name="demandSrcLineId" description="Demand source line identifier"/>
+                <oer:parameter name="demandSrcName" description="Demand source name"/>
+                <oer:parameter name="lotExpirationDate" description="Lot expiration date"/>
+                <oer:parameter name="onhandSource" description="&quot;This parameter controls which subinventories and locators are used for building the tree. If it is 1, then only the ATPable subinventories and locators will be used. If it is 2, then only the nettable subinventores and locators are considered.  If it is 3, the the subinventories and locators considered are not limited based on the nettable and ATPable flags&quot;"/>
+                <oer:parameter name="revision" description="Item revision"/>
+                <oer:parameter name="lotNumber" description="Item lot number"/>
+                <oer:parameter name="subinventoryCode" description="Subinventory code"/>
+                <oer:parameter name="locatorId" description="Locator identifier"/>
+                <oer:parameter name="tsfrSubCode" description="Transfer subinventory code"/>
+                <oer:parameter name="tsfrLocId" description="Transfer locator identifier"/>
+                <oer:return description="Result of the operation that includes on-hand and availability information"/>
+            </oer:parameters>
+        </oer:operation>
+        <oer:operation name="queryAllInventory">
+            <description>Operation to query the inventory on-hand and availability
+                information for both consigned and non-consigned material</description>
+            <oer:parameters>
+                <oer:parameter name="organizationCode" description="Organization code identifier"/>
+                <oer:parameter name="organizationId" description="Organization identifier"/>
+                <oer:parameter name="itemName" description="Inventory item name identifier"/>
+                <oer:parameter name="inventoryItemId" description="Inventory item identifier"/>
+                <oer:parameter name="treeMode" description="Parameter to specify the mode in which the tree has to be created; 1 indicates Reservation mode, 2 indicates Transaction mode, 4 indicates Transfer to Regular mode and 5 indicates Transfer to Consigned mode."/>
+                <oer:parameter name="gradeCode" description="Lot Grade Code"/>
+                <oer:parameter name="assetSubOnly" description="Parameter to specify if only the asset subinventories should be while creating the tree"/>
+                <oer:parameter name="demandSrcTypeId" description="Demand source type identifier"/>
+                <oer:parameter name="demandSrcHdrId" description="Demand source header identifier"/>
+                <oer:parameter name="demandSrcLineId" description="Demand source line identifier"/>
+                <oer:parameter name="demandSrcName" description="Demand source name"/>
+                <oer:parameter name="excludeLotsAfterExpDate" description="Lot expiration date"/>
+                <oer:parameter name="subinventoryType" description="&quot;This parameter controls which subinventories and locators are used for building the tree. If it is 1, then only the ATPable subinventories and locators will be used. If it is 2, then only the nettable subinventores and locators are considered.  If it is 3, the the subinventories and locators considered are not limited based on the nettable and ATPable flags&quot;"/>
+                <oer:parameter name="revision" description="Item revision"/>
+                <oer:parameter name="lotNumber" description="Item lot number"/>
+                <oer:parameter name="subinventoryCode" description="Subinventory code"/>
+                <oer:parameter name="locatorName" description="Locator name identifier"/>
+                <oer:parameter name="locatorId" description="Locator identifier"/>
+                <oer:parameter name="owningEntityCode" description="Owning Entity Code"/>
+                <oer:parameter name="prcBUName" description="Procurement Business Unit Name"/>
+                <oer:parameter name="vendorName" description="Vendor Name"/>
+                <oer:parameter name="vendorNumber" description="Vendor Number"/>
+                <oer:parameter name="consignmentAgreementNumber" description="Consignment Agreement Number"/>
+                <oer:parameter name="owningEntityId" description="Owning Entity identifier"/>
+                <oer:return description="Result of the operation that queries the inventory on-hand and availability information for both consigned and non-consigned material."/>
+            </oer:parameters>
+        </oer:operation>
+    </wsdl:documentation>
+    <plnk:partnerLinkType name="OnhandQuantityService">
+        <plnk:role name="OnhandQuantityServiceProvider">
+            <plnk:portType name="tns:OnhandQuantityService"/>
+        </plnk:role>
+        <plnk:role name="OnhandQuantityServiceRequestor">
+            <plnk:portType name="tns:OnhandQuantityServiceResponse"/>
+        </plnk:role>
+    </plnk:partnerLinkType>
+    <wsp:Policy xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd"
+         wsu:Id="OnhandQuantityServiceResponse_Fault_Policy" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy"/>
+    <wsp:Policy xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd"
+         wsu:Id="OnhandQuantityServiceResponse_Input_Policy" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy">
+        <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+            <sp:Body/>
+            <sp:Header Namespace="http://www.w3.org/2005/08/addressing"/>
+            <sp:Header Namespace="http://schemas.xmlsoap.org/ws/2004/08/addressing"/>
+            <sp:Header Name="fmw-context" Namespace="http://xmlns.oracle.com/fmw/context/1.0"/>
+        </sp:SignedParts>
+        <sp:EncryptedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+            <sp:Body/>
+            <sp:Header Name="fmw-context" Namespace="http://xmlns.oracle.com/fmw/context/1.0"/>
+        </sp:EncryptedParts>
+    </wsp:Policy>
+    <wsp:Policy xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd"
+         wsu:Id="OnhandQuantityServiceResponse_Output_Policy" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy">
+        <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+            <sp:Body/>
+            <sp:Header Name="SignatureConfirmation" Namespace="http://docs.oasis-open.org/wss/oasis-wss-wssecurity-secext-1.1.xsd"/>
+        </sp:SignedParts>
+        <sp:EncryptedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+            <sp:Body/>
+        </sp:EncryptedParts>
+    </wsp:Policy>
+    <wsp:Policy xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd"
+         wsu:Id="OnhandQuantityServiceSoapHttpPort_Fault_Policy" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy">
+        <wsp:ExactlyOne>
+            <wsp:All/>
+            <wsp:All/>
+            <wsp:All/>
+            <wsp:All/>
+        </wsp:ExactlyOne>
+    </wsp:Policy>
+    <wsp:Policy xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd"
+         wsu:Id="OnhandQuantityServiceSoapHttpPort_Input_Policy" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy">
+        <wsp:ExactlyOne>
+            <wsp:All>
+                <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+                    <sp:Body/>
+                    <sp:Header Namespace="http://www.w3.org/2005/08/addressing"/>
+                    <sp:Header Namespace="http://schemas.xmlsoap.org/ws/2004/08/addressing"/>
+                    <sp:Header Name="fmw-context" Namespace="http://xmlns.oracle.com/fmw/context/1.0"/>
+                    <sp:Header Name="SignatureConfirmation" Namespace="http://docs.oasis-open.org/wss/oasis-wss-wssecurity-secext-1.1.xsd"/>
+                </sp:SignedParts>
+                <sp:EncryptedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+                    <sp:Body/>
+                    <sp:Header Name="fmw-context" Namespace="http://xmlns.oracle.com/fmw/context/1.0"/>
+                </sp:EncryptedParts>
+            </wsp:All>
+            <wsp:All>
+                <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+                    <sp:Body/>
+                    <sp:Header Namespace="http://www.w3.org/2005/08/addressing"/>
+                    <sp:Header Namespace="http://schemas.xmlsoap.org/ws/2004/08/addressing"/>
+                    <sp:Header Name="fmw-context" Namespace="http://xmlns.oracle.com/fmw/context/1.0"/>
+                </sp:SignedParts>
+                <sp:EncryptedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+                    <sp:Body/>
+                    <sp:Header Name="fmw-context" Namespace="http://xmlns.oracle.com/fmw/context/1.0"/>
+                </sp:EncryptedParts>
+            </wsp:All>
+            <wsp:All>
+                <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+                    <sp:Body/>
+                    <sp:Header Namespace="http://www.w3.org/2005/08/addressing"/>
+                    <sp:Header Namespace="http://schemas.xmlsoap.org/ws/2004/08/addressing"/>
+                    <sp:Header Name="fmw-context" Namespace="http://xmlns.oracle.com/fmw/context/1.0"/>
+                    <sp:Header Name="SignatureConfirmation" Namespace="http://docs.oasis-open.org/wss/oasis-wss-wssecurity-secext-1.1.xsd"/>
+                </sp:SignedParts>
+                <sp:EncryptedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+                    <sp:Body/>
+                    <sp:Header Name="fmw-context" Namespace="http://xmlns.oracle.com/fmw/context/1.0"/>
+                </sp:EncryptedParts>
+            </wsp:All>
+            <wsp:All>
+                <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+                    <sp:Body/>
+                    <sp:Header Namespace="http://www.w3.org/2005/08/addressing"/>
+                    <sp:Header Namespace="http://schemas.xmlsoap.org/ws/2004/08/addressing"/>
+                    <sp:Header Name="fmw-context" Namespace="http://xmlns.oracle.com/fmw/context/1.0"/>
+                </sp:SignedParts>
+                <sp:EncryptedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+                    <sp:Body/>
+                    <sp:Header Name="fmw-context" Namespace="http://xmlns.oracle.com/fmw/context/1.0"/>
+                </sp:EncryptedParts>
+            </wsp:All>
+        </wsp:ExactlyOne>
+    </wsp:Policy>
+    <wsp:Policy xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd"
+         wsu:Id="OnhandQuantityServiceSoapHttpPort_Output_Policy" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy">
+        <wsp:ExactlyOne>
+            <wsp:All>
+                <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+                    <sp:Body/>
+                </sp:SignedParts>
+                <sp:EncryptedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+                    <sp:Body/>
+                </sp:EncryptedParts>
+            </wsp:All>
+            <wsp:All>
+                <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+                    <sp:Body/>
+                </sp:SignedParts>
+                <sp:EncryptedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+                    <sp:Body/>
+                </sp:EncryptedParts>
+            </wsp:All>
+            <wsp:All>
+                <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+                    <sp:Body/>
+                </sp:SignedParts>
+                <sp:EncryptedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+                    <sp:Body/>
+                </sp:EncryptedParts>
+            </wsp:All>
+            <wsp:All>
+                <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+                    <sp:Body/>
+                </sp:SignedParts>
+                <sp:EncryptedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+                    <sp:Body/>
+                </sp:EncryptedParts>
+            </wsp:All>
+        </wsp:ExactlyOne>
+    </wsp:Policy>
+    <wsp:Policy xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd"
+         wsu:Id="fast_infoset_service_policy" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy">
+        <wsOptfiser:OptimizedFastInfosetSerialization enabled="true" xmlns:wsOptfiser="http://java.sun.com/xml/ns/wsit/2006/09/policy/fastinfoset/service"/>
+    </wsp:Policy>
+    <wsp:Policy xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd"
+         wsu:Id="wsaddr_policy" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy">
+        <wsaw:UsingAddressing xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl"/>
+    </wsp:Policy>
+    <wsp:Policy xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd"
+         wsu:Id="wss11_saml_or_username_token_with_message_protection_service_policy">
+        <wsp:ExactlyOne>
+            <wsp:All>
+                <sp:SymmetricBinding xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+                    <wsp:Policy>
+                        <sp:ProtectionToken>
+                            <wsp:Policy>
+                                <sp:X509Token sp:IncludeToken="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy/IncludeToken/Never">
+                                    <wsp:Policy>
+                                        <sp:RequireThumbprintReference/>
+                                        <sp:WssX509V3Token11/>
+                                    </wsp:Policy>
+                                </sp:X509Token>
+                            </wsp:Policy>
+                        </sp:ProtectionToken>
+                        <sp:AlgorithmSuite>
+                            <wsp:Policy>
+                                <sp:Basic128/>
+                            </wsp:Policy>
+                        </sp:AlgorithmSuite>
+                        <sp:Layout>
+                            <wsp:Policy>
+                                <sp:Lax/>
+                            </wsp:Policy>
+                        </sp:Layout>
+                        <sp:IncludeTimestamp/>
+                        <sp:ProtectTokens/>
+                        <sp:OnlySignEntireHeadersAndBody/>
+                    </wsp:Policy>
+                </sp:SymmetricBinding>
+                <sp:SignedSupportingTokens xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+                    <wsp:Policy>
+                        <sp:SamlToken sp:IncludeToken="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy/IncludeToken/AlwaysToRecipient">
+                            <wsp:Policy>
+                                <sp:WssSamlV11Token11/>
+                            </wsp:Policy>
+                        </sp:SamlToken>
+                    </wsp:Policy>
+                </sp:SignedSupportingTokens>
+                <sp:EndorsingSupportingTokens xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+                    <wsp:Policy>
+                        <sp:X509Token sp:IncludeToken="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy/IncludeToken/AlwaysToRecipient">
+                            <wsp:Policy>
+                                <sp:WssX509V3Token11/>
+                            </wsp:Policy>
+                        </sp:X509Token>
+                    </wsp:Policy>
+                </sp:EndorsingSupportingTokens>
+                <sp:Wss11 xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+                    <wsp:Policy>
+                        <sp:MustSupportRefKeyIdentifier/>
+                        <sp:MustSupportRefIssuerSerial/>
+                        <sp:MustSupportRefThumbprint/>
+                        <sp:MustSupportRefEncryptedKey/>
+                        <sp:RequireSignatureConfirmation/>
+                    </wsp:Policy>
+                </sp:Wss11>
+            </wsp:All>
+            <wsp:All>
+                <sp:SymmetricBinding xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+                    <wsp:Policy>
+                        <sp:ProtectionToken>
+                            <wsp:Policy>
+                                <sp:X509Token sp:IncludeToken="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy/IncludeToken/Never">
+                                    <wsp:Policy>
+                                        <sp:RequireThumbprintReference/>
+                                        <sp:WssX509V3Token11/>
+                                    </wsp:Policy>
+                                </sp:X509Token>
+                            </wsp:Policy>
+                        </sp:ProtectionToken>
+                        <sp:AlgorithmSuite>
+                            <wsp:Policy>
+                                <sp:Basic128Exn256/>
+                            </wsp:Policy>
+                        </sp:AlgorithmSuite>
+                        <sp:Layout>
+                            <wsp:Policy>
+                                <sp:Lax/>
+                            </wsp:Policy>
+                        </sp:Layout>
+                        <sp:IncludeTimestamp/>
+                        <sp:ProtectTokens/>
+                        <sp:OnlySignEntireHeadersAndBody/>
+                    </wsp:Policy>
+                </sp:SymmetricBinding>
+                <sp:SignedSupportingTokens xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+                    <wsp:Policy>
+                        <sp:SamlToken sp:IncludeToken="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy/IncludeToken/AlwaysToRecipient">
+                            <wsp:Policy>
+                                <sp:WssSamlV11Token11/>
+                            </wsp:Policy>
+                        </sp:SamlToken>
+                    </wsp:Policy>
+                </sp:SignedSupportingTokens>
+                <sp:EndorsingSupportingTokens xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+                    <wsp:Policy>
+                        <sp:X509Token sp:IncludeToken="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy/IncludeToken/AlwaysToRecipient">
+                            <wsp:Policy>
+                                <sp:WssX509V3Token11/>
+                            </wsp:Policy>
+                        </sp:X509Token>
+                    </wsp:Policy>
+                </sp:EndorsingSupportingTokens>
+                <sp:Wss11 xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+                    <wsp:Policy>
+                        <sp:MustSupportRefKeyIdentifier/>
+                        <sp:MustSupportRefIssuerSerial/>
+                        <sp:MustSupportRefThumbprint/>
+                        <sp:MustSupportRefEncryptedKey/>
+                        <sp:RequireSignatureConfirmation/>
+                    </wsp:Policy>
+                </sp:Wss11>
+            </wsp:All>
+            <wsp:All>
+                <sp:SymmetricBinding xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+                    <wsp:Policy>
+                        <sp:ProtectionToken>
+                            <wsp:Policy>
+                                <sp:X509Token sp:IncludeToken="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy/IncludeToken/Never">
+                                    <wsp:Policy>
+                                        <sp:RequireThumbprintReference/>
+                                        <sp:WssX509V3Token11/>
+                                    </wsp:Policy>
+                                </sp:X509Token>
+                            </wsp:Policy>
+                        </sp:ProtectionToken>
+                        <sp:AlgorithmSuite>
+                            <wsp:Policy>
+                                <sp:Basic128/>
+                            </wsp:Policy>
+                        </sp:AlgorithmSuite>
+                        <sp:Layout>
+                            <wsp:Policy>
+                                <sp:Lax/>
+                            </wsp:Policy>
+                        </sp:Layout>
+                        <sp:IncludeTimestamp/>
+                        <sp:OnlySignEntireHeadersAndBody/>
+                    </wsp:Policy>
+                </sp:SymmetricBinding>
+                <sp:SignedSupportingTokens xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+                    <wsp:Policy>
+                        <sp:UsernameToken sp:IncludeToken="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy/IncludeToken/AlwaysToRecipient">
+                            <wsp:Policy>
+                                <sp:WssUsernameToken10/>
+                            </wsp:Policy>
+                        </sp:UsernameToken>
+                    </wsp:Policy>
+                </sp:SignedSupportingTokens>
+                <sp:Wss11 xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+                    <wsp:Policy>
+                        <sp:MustSupportRefKeyIdentifier/>
+                        <sp:MustSupportRefIssuerSerial/>
+                        <sp:MustSupportRefThumbprint/>
+                        <sp:MustSupportRefEncryptedKey/>
+                        <sp:RequireSignatureConfirmation/>
+                    </wsp:Policy>
+                </sp:Wss11>
+            </wsp:All>
+            <wsp:All>
+                <sp:SymmetricBinding xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+                    <wsp:Policy>
+                        <sp:ProtectionToken>
+                            <wsp:Policy>
+                                <sp:X509Token sp:IncludeToken="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy/IncludeToken/Never">
+                                    <wsp:Policy>
+                                        <sp:RequireThumbprintReference/>
+                                        <sp:WssX509V3Token11/>
+                                    </wsp:Policy>
+                                </sp:X509Token>
+                            </wsp:Policy>
+                        </sp:ProtectionToken>
+                        <sp:AlgorithmSuite>
+                            <wsp:Policy>
+                                <sp:Basic128Exn256/>
+                            </wsp:Policy>
+                        </sp:AlgorithmSuite>
+                        <sp:Layout>
+                            <wsp:Policy>
+                                <sp:Lax/>
+                            </wsp:Policy>
+                        </sp:Layout>
+                        <sp:IncludeTimestamp/>
+                        <sp:OnlySignEntireHeadersAndBody/>
+                    </wsp:Policy>
+                </sp:SymmetricBinding>
+                <sp:SignedSupportingTokens xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+                    <wsp:Policy>
+                        <sp:UsernameToken sp:IncludeToken="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy/IncludeToken/AlwaysToRecipient">
+                            <wsp:Policy>
+                                <sp:WssUsernameToken10/>
+                            </wsp:Policy>
+                        </sp:UsernameToken>
+                    </wsp:Policy>
+                </sp:SignedSupportingTokens>
+                <sp:Wss11 xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+                    <wsp:Policy>
+                        <sp:MustSupportRefKeyIdentifier/>
+                        <sp:MustSupportRefIssuerSerial/>
+                        <sp:MustSupportRefThumbprint/>
+                        <sp:MustSupportRefEncryptedKey/>
+                        <sp:RequireSignatureConfirmation/>
+                    </wsp:Policy>
+                </sp:Wss11>
+            </wsp:All>
+            <wsp:All>
+                <sp:TransportBinding xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+                    <wsp:Policy>
+                        <sp:AlgorithmSuite>
+                            <wsp:Policy>
+                                <sp:Basic128/>
+                            </wsp:Policy>
+                        </sp:AlgorithmSuite>
+                        <sp:TransportToken>
+                            <wsp:Policy>
+                                <sp:HttpsToken RequireClientCertificate="false">
+                                    <wsp:Policy/>
+                                </sp:HttpsToken>
+                            </wsp:Policy>
+                        </sp:TransportToken>
+                        <sp:Layout>
+                            <wsp:Policy>
+                                <sp:Lax/>
+                            </wsp:Policy>
+                        </sp:Layout>
+                        <sp:IncludeTimestamp/>
+                    </wsp:Policy>
+                </sp:TransportBinding>
+                <sp:SupportingTokens xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+                    <wsp:Policy>
+                        <sp:SamlToken sp:IncludeToken="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy/IncludeToken/AlwaysToRecipient">
+                            <wsp:Policy>
+                                <sp:WssSamlV11Token10/>
+                            </wsp:Policy>
+                        </sp:SamlToken>
+                    </wsp:Policy>
+                </sp:SupportingTokens>
+            </wsp:All>
+            <wsp:All>
+                <sp:TransportBinding xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+                    <wsp:Policy>
+                        <sp:AlgorithmSuite>
+                            <wsp:Policy>
+                                <sp:Basic128/>
+                            </wsp:Policy>
+                        </sp:AlgorithmSuite>
+                        <sp:TransportToken>
+                            <wsp:Policy>
+                                <sp:HttpsToken RequireClientCertificate="false">
+                                    <wsp:Policy/>
+                                </sp:HttpsToken>
+                            </wsp:Policy>
+                        </sp:TransportToken>
+                        <sp:Layout>
+                            <wsp:Policy>
+                                <sp:Lax/>
+                            </wsp:Policy>
+                        </sp:Layout>
+                        <sp:IncludeTimestamp/>
+                    </wsp:Policy>
+                </sp:TransportBinding>
+                <sp:SupportingTokens xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+                    <wsp:Policy>
+                        <sp:SamlToken sp:IncludeToken="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy/IncludeToken/AlwaysToRecipient">
+                            <wsp:Policy>
+                                <sp:WssSamlV20Token11/>
+                            </wsp:Policy>
+                        </sp:SamlToken>
+                    </wsp:Policy>
+                </sp:SupportingTokens>
+            </wsp:All>
+            <wsp:All>
+                <sp:TransportBinding xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+                    <wsp:Policy>
+                        <sp:AlgorithmSuite>
+                            <wsp:Policy>
+                                <sp:Basic128/>
+                            </wsp:Policy>
+                        </sp:AlgorithmSuite>
+                        <sp:TransportToken>
+                            <wsp:Policy>
+                                <sp:HttpsToken RequireClientCertificate="false">
+                                    <wsp:Policy/>
+                                </sp:HttpsToken>
+                            </wsp:Policy>
+                        </sp:TransportToken>
+                        <sp:Layout>
+                            <wsp:Policy>
+                                <sp:Lax/>
+                            </wsp:Policy>
+                        </sp:Layout>
+                        <sp:IncludeTimestamp/>
+                    </wsp:Policy>
+                </sp:TransportBinding>
+                <sp:SupportingTokens xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+                    <wsp:Policy>
+                        <sp:UsernameToken sp:IncludeToken="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy/IncludeToken/AlwaysToRecipient">
+                            <wsp:Policy>
+                                <sp:WssUsernameToken10/>
+                            </wsp:Policy>
+                        </sp:UsernameToken>
+                    </wsp:Policy>
+                </sp:SupportingTokens>
+            </wsp:All>
+            <wsp:All>
+                <sp:TransportBinding xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+                    <wsp:Policy>
+                        <sp:AlgorithmSuite>
+                            <wsp:Policy>
+                                <sp:Basic128/>
+                            </wsp:Policy>
+                        </sp:AlgorithmSuite>
+                        <sp:TransportToken>
+                            <wsp:Policy>
+                                <sp:HttpsToken RequireClientCertificate="false">
+                                    <wsp:Policy/>
+                                </sp:HttpsToken>
+                            </wsp:Policy>
+                        </sp:TransportToken>
+                        <sp:Layout>
+                            <wsp:Policy>
+                                <sp:Lax/>
+                            </wsp:Policy>
+                        </sp:Layout>
+                    </wsp:Policy>
+                </sp:TransportBinding>
+            </wsp:All>
+            <wsp:All>
+                <sp:TransportBinding xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+                    <wsp:Policy>
+                        <sp:AlgorithmSuite>
+                            <wsp:Policy>
+                                <sp:Basic128/>
+                            </wsp:Policy>
+                        </sp:AlgorithmSuite>
+                        <sp:TransportToken>
+                            <wsp:Policy>
+                                <sp:HttpsToken RequireClientCertificate="false">
+                                    <wsp:Policy>
+                                        <osp:HttpJwtAuthentication xmlns:osp="http://schemas.oracle.com/ws/2012/01/wssecuritypolicy"/>
+                                    </wsp:Policy>
+                                </sp:HttpsToken>
+                            </wsp:Policy>
+                        </sp:TransportToken>
+                        <sp:Layout>
+                            <wsp:Policy>
+                                <sp:Lax/>
+                            </wsp:Policy>
+                        </sp:Layout>
+                    </wsp:Policy>
+                </sp:TransportBinding>
+            </wsp:All>
+        </wsp:ExactlyOne>
+    </wsp:Policy>
+    <wsp:Policy xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd"
+         wsu:Id="wss11_saml_token_with_message_protection_client_policy">
+        <sp:SymmetricBinding xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+            <wsp:Policy>
+                <sp:ProtectionToken>
+                    <wsp:Policy>
+                        <sp:X509Token sp:IncludeToken="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy/IncludeToken/Never">
+                            <wsp:Policy>
+                                <sp:RequireThumbprintReference/>
+                                <sp:WssX509V3Token11/>
+                            </wsp:Policy>
+                        </sp:X509Token>
+                    </wsp:Policy>
+                </sp:ProtectionToken>
+                <sp:AlgorithmSuite>
+                    <wsp:Policy>
+                        <sp:Basic128/>
+                    </wsp:Policy>
+                </sp:AlgorithmSuite>
+                <sp:Layout>
+                    <wsp:Policy>
+                        <sp:Lax/>
+                    </wsp:Policy>
+                </sp:Layout>
+                <sp:IncludeTimestamp/>
+                <sp:ProtectTokens/>
+                <sp:OnlySignEntireHeadersAndBody/>
+            </wsp:Policy>
+        </sp:SymmetricBinding>
+        <sp:SignedSupportingTokens xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+            <wsp:Policy>
+                <sp:SamlToken sp:IncludeToken="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy/IncludeToken/AlwaysToRecipient">
+                    <wsp:Policy>
+                        <sp:WssSamlV11Token11/>
+                    </wsp:Policy>
+                </sp:SamlToken>
+            </wsp:Policy>
+        </sp:SignedSupportingTokens>
+        <sp:EndorsingSupportingTokens xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+            <wsp:Policy>
+                <sp:X509Token sp:IncludeToken="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy/IncludeToken/AlwaysToRecipient">
+                    <wsp:Policy>
+                        <sp:WssX509V3Token11/>
+                    </wsp:Policy>
+                </sp:X509Token>
+            </wsp:Policy>
+        </sp:EndorsingSupportingTokens>
+        <sp:Wss11 xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+            <wsp:Policy>
+                <sp:MustSupportRefKeyIdentifier/>
+                <sp:MustSupportRefIssuerSerial/>
+                <sp:MustSupportRefThumbprint/>
+                <sp:MustSupportRefEncryptedKey/>
+                <sp:RequireSignatureConfirmation/>
+            </wsp:Policy>
+        </sp:Wss11>
+    </wsp:Policy>
+    <wsdl:import namespace="http://xmlns.oracle.com/adf/svc/errors/" location="ServiceException.wsdl"/>
+    <wsdl:types>
+        <schema xmlns="http://www.w3.org/2001/XMLSchema">
+            <import namespace="http://xmlns.oracle.com/oracleas/schema/oracle-fault-11_0" schemaLocation="../Schemas/oracle_webservices_async_fault_11_0.xsd"/>
+            <import namespace="http://xmlns.oracle.com/apps/scm/inventory/materialAvailability/onhandQuantities/onhandQuantityServiceV2/types/"
+                 schemaLocation="../Schemas/OnhandQuantityService.xsd"/>
+        </schema>
+    </wsdl:types>
+    <wsdl:message name="OnhandQuantityService_onFault">
+        <wsdl:part name="parameters" element="orafault:Fault"/>
+    </wsdl:message>
+    <wsdl:message name="OnhandQuantityService_queryAsyncResponse">
+        <wsdl:part name="parameters" element="types:queryAsyncResponse"/>
+    </wsdl:message>
+    <wsdl:message name="OnhandQuantityService_queryAllInventoryAsyncResponse">
+        <wsdl:part name="parameters" element="types:queryAllInventoryAsyncResponse"/>
+    </wsdl:message>
+    <wsdl:message name="OnhandQuantityService_query">
+        <wsdl:part name="parameters" element="types:query"/>
+    </wsdl:message>
+    <wsdl:message name="OnhandQuantityService_queryResponse">
+        <wsdl:part name="parameters" element="types:queryResponse"/>
+    </wsdl:message>
+    <wsdl:message name="OnhandQuantityService_queryAsync">
+        <wsdl:part name="parameters" element="types:queryAsync"/>
+    </wsdl:message>
+    <wsdl:message name="OnhandQuantityService_queryAllInventory">
+        <wsdl:part name="parameters" element="types:queryAllInventory"/>
+    </wsdl:message>
+    <wsdl:message name="OnhandQuantityService_queryAllInventoryResponse">
+        <wsdl:part name="parameters" element="types:queryAllInventoryResponse"/>
+    </wsdl:message>
+    <wsdl:message name="OnhandQuantityService_queryAllInventoryAsync">
+        <wsdl:part name="parameters" element="types:queryAllInventoryAsync"/>
+    </wsdl:message>
+    <wsdl:portType name="OnhandQuantityServiceResponse">
+        <wsdl:operation name="onFault">
+            <wsdl:input message="tns:OnhandQuantityService_onFault" xmlns:ns1="http://www.w3.org/2006/05/addressing/wsdl"
+                 ns1:Action="http://xmlns.oracle.com/oracleas/schema/oracle-fault-11_0/Fault"/>
+        </wsdl:operation>
+        <wsdl:operation name="queryAsyncResponse">
+            <wsdl:input message="tns:OnhandQuantityService_queryAsyncResponse" xmlns:ns1="http://www.w3.org/2006/05/addressing/wsdl"
+                 ns1:Action="http://xmlns.oracle.com/apps/scm/inventory/materialAvailability/onhandQuantities/onhandQuantityServiceV2/queryAsyncResponse"/>
+        </wsdl:operation>
+        <wsdl:operation name="queryAllInventoryAsyncResponse">
+            <wsdl:input message="tns:OnhandQuantityService_queryAllInventoryAsyncResponse" xmlns:ns1="http://www.w3.org/2006/05/addressing/wsdl"
+                 ns1:Action="http://xmlns.oracle.com/apps/scm/inventory/materialAvailability/onhandQuantities/onhandQuantityServiceV2/queryAllInventoryAsyncResponse"/>
+        </wsdl:operation>
+    </wsdl:portType>
+    <wsdl:portType name="OnhandQuantityService">
+        <wsdl:documentation/>
+        <wsdl:operation name="query">
+            <wsdl:input message="tns:OnhandQuantityService_query"/>
+            <wsdl:output message="tns:OnhandQuantityService_queryResponse"/>
+            <wsdl:fault name="ServiceException" message="errors:ServiceException"/>
+        </wsdl:operation>
+        <wsdl:operation name="queryAsync">
+            <wsdl:input message="tns:OnhandQuantityService_queryAsync" xmlns:ns1="http://www.w3.org/2006/05/addressing/wsdl"
+                 ns1:Action="http://xmlns.oracle.com/apps/scm/inventory/materialAvailability/onhandQuantities/onhandQuantityServiceV2/queryAsync"/>
+        </wsdl:operation>
+        <wsdl:operation name="queryAllInventory">
+            <wsdl:input message="tns:OnhandQuantityService_queryAllInventory"/>
+            <wsdl:output message="tns:OnhandQuantityService_queryAllInventoryResponse"/>
+            <wsdl:fault name="ServiceException" message="errors:ServiceException"/>
+        </wsdl:operation>
+        <wsdl:operation name="queryAllInventoryAsync">
+            <wsdl:input message="tns:OnhandQuantityService_queryAllInventoryAsync" xmlns:ns1="http://www.w3.org/2006/05/addressing/wsdl"
+                 ns1:Action="http://xmlns.oracle.com/apps/scm/inventory/materialAvailability/onhandQuantities/onhandQuantityServiceV2/queryAllInventoryAsync"/>
+        </wsdl:operation>
+    </wsdl:portType>
+    <wsdl:binding name="OnhandQuantityServiceSoapHttp" type="tns:OnhandQuantityService">
+        <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+        <wsp:PolicyReference xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" URI="#wss11_saml_or_username_token_with_message_protection_service_policy"
+             wsdl:required="false"/>
+        <wsp:PolicyReference xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" URI="#fast_infoset_service_policy"
+             wsdl:required="false"/>
+        <wsp:PolicyReference xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" URI="#wsaddr_policy"
+             wsdl:required="false"/>
+        <wsdl:operation name="query">
+            <soap:operation soapAction="http://xmlns.oracle.com/apps/scm/inventory/materialAvailability/onhandQuantities/onhandQuantityServiceV2/query"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+                <wsp:PolicyReference xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" URI="#OnhandQuantityServiceSoapHttpPort_Input_Policy"
+                     wsdl:required="false"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+                <wsp:PolicyReference xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" URI="#OnhandQuantityServiceSoapHttpPort_Output_Policy"
+                     wsdl:required="false"/>
+            </wsdl:output>
+            <wsdl:fault name="ServiceException">
+                <soap:fault name="ServiceException" use="literal"/>
+                <wsp:PolicyReference xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" URI="#OnhandQuantityServiceSoapHttpPort_Fault_Policy"
+                     wsdl:required="false"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="queryAsync">
+            <soap:operation soapAction="http://xmlns.oracle.com/apps/scm/inventory/materialAvailability/onhandQuantities/onhandQuantityServiceV2/queryAsync"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+                <wsp:PolicyReference xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" URI="#OnhandQuantityServiceSoapHttpPort_Input_Policy"
+                     wsdl:required="false"/>
+            </wsdl:input>
+        </wsdl:operation>
+        <wsdl:operation name="queryAllInventory">
+            <soap:operation soapAction="http://xmlns.oracle.com/apps/scm/inventory/materialAvailability/onhandQuantities/onhandQuantityServiceV2/queryAllInventory"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+                <wsp:PolicyReference xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" URI="#OnhandQuantityServiceSoapHttpPort_Input_Policy"
+                     wsdl:required="false"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+                <wsp:PolicyReference xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" URI="#OnhandQuantityServiceSoapHttpPort_Output_Policy"
+                     wsdl:required="false"/>
+            </wsdl:output>
+            <wsdl:fault name="ServiceException">
+                <soap:fault name="ServiceException" use="literal"/>
+                <wsp:PolicyReference xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" URI="#OnhandQuantityServiceSoapHttpPort_Fault_Policy"
+                     wsdl:required="false"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="queryAllInventoryAsync">
+            <soap:operation soapAction="http://xmlns.oracle.com/apps/scm/inventory/materialAvailability/onhandQuantities/onhandQuantityServiceV2/queryAllInventoryAsync"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+                <wsp:PolicyReference xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" URI="#OnhandQuantityServiceSoapHttpPort_Input_Policy"
+                     wsdl:required="false"/>
+            </wsdl:input>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:binding name="OnhandQuantityServiceResponseBinding" type="tns:OnhandQuantityServiceResponse">
+        <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+        <wsp:PolicyReference xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" URI="#wss11_saml_token_with_message_protection_client_policy"
+             wsdl:required="false"/>
+        <wsdl:operation name="onFault">
+            <soap:operation soapAction="http://xmlns.oracle.com/oracleas/schema/oracle-fault-11_0/Fault"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+                <wsp:PolicyReference xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" URI="#OnhandQuantityServiceResponse_Input_Policy"
+                     wsdl:required="false"/>
+            </wsdl:input>
+        </wsdl:operation>
+        <wsdl:operation name="queryAsyncResponse">
+            <soap:operation soapAction="http://xmlns.oracle.com/apps/scm/inventory/materialAvailability/onhandQuantities/onhandQuantityServiceV2/queryAsyncResponse"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+                <wsp:PolicyReference xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" URI="#OnhandQuantityServiceResponse_Input_Policy"
+                     wsdl:required="false"/>
+            </wsdl:input>
+        </wsdl:operation>
+        <wsdl:operation name="queryAllInventoryAsyncResponse">
+            <soap:operation soapAction="http://xmlns.oracle.com/apps/scm/inventory/materialAvailability/onhandQuantities/onhandQuantityServiceV2/queryAllInventoryAsyncResponse"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+                <wsp:PolicyReference xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" URI="#OnhandQuantityServiceResponse_Input_Policy"
+                     wsdl:required="false"/>
+            </wsdl:input>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:service name="OnhandQuantityService">
+        <wsdl:port name="OnhandQuantityServiceSoapHttpPort" binding="tns:OnhandQuantityServiceSoapHttp">
+            <soap:address location="https://eiqv-test.fa.us6.oraclecloud.com:443/fscmService/OnhandQuantityServiceV2"/>
+            <wsa:EndpointReference xmlns:wsa="http://www.w3.org/2005/08/addressing">
+                <wsa:Address xmlns:wsa="http://www.w3.org/2005/08/addressing">https://eiqv-test.fa.us6.oraclecloud.com:443/fscmService/OnhandQuantityServiceV2</wsa:Address>
+                <wsid:Identity xmlns:wsid="http://schemas.xmlsoap.org/ws/2006/02/addressingidentity">
+                    <dsig:KeyInfo xmlns:dsig="http://www.w3.org/2000/09/xmldsig#">
+                        <dsig:X509Data>
+                            <dsig:X509Certificate>MIIDVzCCAj+gAwIBAgIIT/yPBCeD1PswDQYJKoZIhvcNAQELBQAwWTETMBEGCgmS
+JomT8ixkARkWA2NvbTEWMBQGCgmSJomT8ixkARkWBm9yYWNsZTEVMBMGCgmSJomT
+8ixkARkWBWNsb3VkMRMwEQYDVQQDEwpDbG91ZDlDQS0yMB4XDTE2MDUyODAzNDcy
+OVoXDTI2MDUyNjAzNDcyOVowWzETMBEGCgmSJomT8ixkARkWA2NvbTEWMBQGCgmS
+JomT8ixkARkWBm9yYWNsZTEVMBMGCgmSJomT8ixkARkWBWNsb3VkMRUwEwYDVQQD
+EwxGQUVuY3J5cHRpb24wggEiMA0GCSqGSIb3DQEBAQUAA4IBDwAwggEKAoIBAQCp
+KD/tDxflZbH41vnIlOLD4C8JI1f7escvpK1/SvQZNLilaJ+rm2CNoUzjhWQG1JL/
+mcbo61UQ5idaSRABafZ7xMyWz6FMfn6PqIxArbGEZdf0Q+0IHBkSBtjIZ1FNYiCi
+nu8q7CKObzyzRV3Rbvj7DzOdqubQ20r1/gyxw3HfhDXknBEiyC19GKkrReedgSir
+uB+PxgpsJNUGlm03ZQLAgR/u7fmsCQqbvRTx+nr229jDWBsqBQbBHrTy14NU9ZRl
+neNA82jh87WiUxC6eUzJyynThDC4Ux5ncEnrac2MyaVoqcO02mk167oH+9HfWyn6
+8d8LOkHWpGacieNDO5EXAgMBAAGjITAfMB0GA1UdDgQWBBTYnQF69xPmMTA36+DS
+bKdWe7YtMDANBgkqhkiG9w0BAQsFAAOCAQEARmfGrdlTLElHhhcPfdGOXnJBm46N
+3jKAhxrwF4ucQQ7tCqXF/9LcQmWBLwMgDefxYWtCIDT1SvhYgeF3Yy16hmxiSIbV
+ZCKjGCHoiUh4RgEghVmdRaAJxm+6E74fLNfyGdmOQv85whfadb6xkrY7dOyToipF
+ggu/d2RrZYrvSaOvu5usfQ/GujzkMsqHB2V+SNJqAzmX9ax/yYoFpod1niH7JNLw
+SkbKIsEqpiD+eTtahZThMZ+9zHQCSkdZtgM/klctUjtTNSBzf5+HScrUK/mBuZUK
+7VzFFnXVhsD8OaIu0SudByEqT6Q7vhN1AB38ar4n1rJmA9uoStHF7YWxhQ==</dsig:X509Certificate>
+                            <dsig:X509IssuerSerial>
+                                <dsig:X509IssuerName>CN=Cloud9CA-2, DC=cloud, DC=oracle, DC=com</dsig:X509IssuerName>
+                                <dsig:X509SerialNumber>5763638871132984571</dsig:X509SerialNumber>
+                            </dsig:X509IssuerSerial>
+                            <dsig:X509SubjectName>CN=FAEncryption, DC=cloud, DC=oracle, DC=com</dsig:X509SubjectName>
+                            <dsig:X509SKI>2J0BevcT5jEwN+vg0mynVnu2LTA=</dsig:X509SKI>
+                            <dsig:X509Certificate>MIIDazCCAlOgAwIBAgIIVG39wJnOff4wDQYJKoZIhvcNAQELBQAwWTETMBEGCgmS
+JomT8ixkARkWA2NvbTEWMBQGCgmSJomT8ixkARkWBm9yYWNsZTEVMBMGCgmSJomT
+8ixkARkWBWNsb3VkMRMwEQYDVQQDEwpDbG91ZDlDQS0yMCAXDTE2MDUyODAzNDcy
+OFoYDzIxMTYwNTA0MDM0NzI4WjBZMRMwEQYKCZImiZPyLGQBGRYDY29tMRYwFAYK
+CZImiZPyLGQBGRYGb3JhY2xlMRUwEwYKCZImiZPyLGQBGRYFY2xvdWQxEzARBgNV
+BAMTCkNsb3VkOUNBLTIwggEiMA0GCSqGSIb3DQEBAQUAA4IBDwAwggEKAoIBAQDm
+xTOCcmaSkBMBdFz1s4Ri48tY7FKYrfN83sE4EYvDe8/I5A2qTkYnDJbX07QYfeW1
+biyR2wMF1ms1jATkXhy5o9AxiK8B1YD1O5d0acYivl6MESqIpAU76epDCSRhY7Kf
+myUlHyRZcIta7YL8wSEMriQTOBiLM0Lm0eFl7UU7oJqy6DMAbJ2Xm+/UvQxTKFDf
+VwuRGDQSx1cwGTAhQJ4Mm0lmkw9k6qo0LrgOii/Q6xsca+XPSKcaJgKDQiBpoxnh
+5AqUXbWhF/RaoUXUbOgGSJhQhyVPqSVfYsmOt25++3IS+wSJst5eHZ/wvf8jR8wu
+/z/62Uqcz/7Zub9D9kgvAgMBAAGjNTAzMBIGA1UdEwEB/wQIMAYBAf8CAQAwHQYD
+VR0OBBYEFPj83RIIMectb5d49Z6Y0Tw4As0rMA0GCSqGSIb3DQEBCwUAA4IBAQAI
+mcQymnssHZ1kqfmwn0MWvBr/xRaTBvC4Zu7htnr9HHsibHFPhYJfqM3VcLs5lDIg
+jMLYOfI9o9dbOhPZ/tREnAAPV/9bu7bipMMTJoDwGr7l1cpTF/sisawvOKkJ/0sC
+HuKsiE3Uz25/1ABG+F0+uxZFi0GCbGPmcFku4KliyzUOMNm+UUq2G6zMqZi3DSnc
+PQjD9IcIOO7TDQgH0hbj5QtuTIANiVJTIdtIOFgPofdSsrTeYGG9nuyr46d4XSio
+W9h9VDEECvUVZqexYp9CwdD91MMVjc2Oqc0CrUv+EzpTf+J+uSnb7+omQK060uHk
+ZSxYqkElNd+SzodVC9yW</dsig:X509Certificate>
+                        </dsig:X509Data>
+                    </dsig:KeyInfo>
+                </wsid:Identity>
+            </wsa:EndpointReference>
+        </wsdl:port>
+    </wsdl:service>
+</wsdl:definitions>

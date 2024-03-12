@@ -1,0 +1,226 @@
+<?xml version = "1.0" encoding = "UTF-8" ?>
+<!--
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  Oracle JDeveloper BPEL Designer 
+  
+  Created: Mon Feb 26 23:53:15 EST 2024
+  Author:  alain
+  Type: BPEL 2.0 Process
+  Purpose: Synchronous BPEL Process
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+-->
+<process name="BPELProcessSCM"
+               targetNamespace="http://xmlns.oracle.com/ParaPOCInvSCM/ParaPOCInvSCM/BPELProcessSCM"
+               xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+               xmlns:client="http://xmlns.oracle.com/ParaPOCInvSCM/ParaPOCInvSCM/BPELProcessSCM"
+               xmlns:ora="http://schemas.oracle.com/xpath/extension"
+               xmlns:ui="http://xmlns.oracle.com/soa/designer"
+               xmlns:bpelx="http://schemas.oracle.com/bpel/extension"
+               xmlns:bpel="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+               xmlns:ns1="http://xmlns.oracle.com/apps/scm/inventory/materialAvailability/onhandQuantities/onhandQuantityServiceV2/"
+               xmlns:ns3="http://xmlns.oracle.com/apps/scm/inventory/materialAvailability/onhandQuantities/onhandQuantityServiceV2/types/"
+               xmlns:ns2="http://www.datos.org" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+               xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+               xmlns:oraext="http://www.oracle.com/XSL/Transform/java/oracle.tip.pc.services.functions.ExtFunc"
+               xmlns:bpm="http://xmlns.oracle.com/bpmn20/extensions"
+               xmlns:xp20="http://www.oracle.com/XSL/Transform/java/oracle.tip.pc.services.functions.Xpath20"
+               xmlns:ess="http://xmlns.oracle.com/scheduler" xmlns:hwf="http://xmlns.oracle.com/bpel/workflow/xpath"
+               xmlns:xref="http://www.oracle.com/XSL/Transform/java/oracle.tip.xref.xpath.XRefXPathFunctions"
+               xmlns:dvm="http://www.oracle.com/XSL/Transform/java/oracle.tip.dvm.LookupValue"
+               xmlns:bpws="http://schemas.xmlsoap.org/ws/2003/03/business-process/"
+               xmlns:xdk="http://schemas.oracle.com/bpel/extension/xpath/function/xdk"
+               xmlns:ids="http://xmlns.oracle.com/bpel/services/IdentityService/xpath"
+               xmlns:ldap="http://schemas.oracle.com/xpath/extension/ldap">
+
+    <import ui:processWSDL="true" namespace="http://xmlns.oracle.com/ParaPOCInvSCM/ParaPOCInvSCM/BPELProcessSCM" location="../WSDLs/BPELProcessSCM.wsdl" importType="http://schemas.xmlsoap.org/wsdl/"/>
+    <!-- 
+      ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        PARTNERLINKS                                                      
+        List of services participating in this BPEL process               
+      ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    --> 
+  <partnerLinks>
+    <!-- 
+      The 'client' role represents the requester of this service. It is 
+      used for callback. The location and correlation information associated
+      with the client role are automatically set using WS-Addressing.
+    -->
+    <partnerLink name="bpelprocessscm_client" partnerLinkType="client:BPELProcessSCM" myRole="BPELProcessSCMProvider"/>
+    <partnerLink name="SOAPReferenceSCM" partnerLinkType="ns1:SOAPReferenceSCM" partnerRole="OnhandQuantityService"
+                 myRole="OnhandQuantityService"/>
+  </partnerLinks>
+
+  <!-- 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+      VARIABLES                                                        
+      List of messages and XML documents used within this BPEL process 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  -->
+  <variables>
+    <!-- Reference to the message passed as input during initiation -->
+    <variable name="inputVariable" messageType="client:BPELProcessSCMRequestMessage"/>
+
+    <!-- Reference to the message that will be returned to the requester-->
+    <variable name="outputVariable" messageType="client:BPELProcessSCMResponseMessage"/>
+    <variable name="Invoke1_queryAllInventory_InputVariable" messageType="ns1:OnhandQuantityService_queryAllInventory"/>
+    <variable name="Invoke1_queryAllInventory_OutputVariable" messageType="ns1:OnhandQuantityService_queryAllInventoryResponse"/>
+    <variable name="vQuantity" type="xsd:decimal"/>
+    <variable name="flagQuantityInvalid" type="xsd:boolean">
+      <from>false()</from>
+    </variable>
+    <variable name="description" type="xsd:string"/>
+    <variable name="onhand_quantity" type="xsd:decimal"/>
+    <variable name="data" type="xsd:string"/>
+    <variable name="csfKey_Variable" type="xsd:string"/>
+  </variables>
+
+  <!-- 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+     ORCHESTRATION LOGIC                                               
+     Set of activities coordinating the flow of messages across the    
+     services integrated within this business process                  
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  -->
+  <sequence name="main">
+
+    <!-- Receive input from requestor. (Note: This maps to operation defined in BPELProcessSCM.wsdl) --><receive name="receiveInput" partnerLink="bpelprocessscm_client" portType="client:BPELProcessSCM" operation="process" variable="inputVariable" createInstance="yes"/>
+    <assign name="AssignEntrada">
+      <copy>
+        <from>$inputVariable.payload/ns2:xi_warehouse</from>
+        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$Invoke1_queryAllInventory_InputVariable.parameters/ns3:organizationCode</to>
+      </copy>
+      <copy>
+        <from>$inputVariable.payload/ns2:xi_product_code</from>
+        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$Invoke1_queryAllInventory_InputVariable.parameters/ns3:itemName</to>
+      </copy>
+      <copy>
+        <from><literal>2</literal></from>
+        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$Invoke1_queryAllInventory_InputVariable.parameters/ns3:treeMode</to>
+      </copy>
+      <copy>
+        <from>$inputVariable.payload/ns2:xi_subinventory</from>
+        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$Invoke1_queryAllInventory_InputVariable.parameters/ns3:subinventoryCode</to>
+      </copy>
+      <copy>
+        <from>$inputVariable.payload/ns2:external_id</from>
+        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$Invoke1_queryAllInventory_InputVariable.parameters/ns3:locatorName</to>
+      </copy>
+    </assign>
+    <assign name="Assign_FlagQuantityInvalid">
+      <copy>
+        <from>false()</from>
+        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$flagQuantityInvalid</to>
+      </copy>
+    </assign>
+    <if name="QuantityEmpty">
+      <condition>string-length($inputVariable.payload/ns2:quantity) = 0</condition><sequence name="Sequence3"><sequence>
+          <assign name="AssignAuth">
+            <copy>
+              <from>'ExternalServiceSCMQuantity'</from>
+              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$csfKey_Variable</to>
+            </copy>
+          </assign>
+          <invoke name="Invoke_OnhandQuantityService"
+                                                                                                                                partnerLink="SOAPReferenceSCM"
+                                                                                                                                portType="ns1:OnhandQuantityService"
+                                                                                                                                operation="queryAllInventory"
+                                                                                                                                inputVariable="Invoke1_queryAllInventory_InputVariable"
+                                                                                                                                outputVariable="Invoke1_queryAllInventory_OutputVariable"
+                  bpelx:invokeAsDetail="no">
+            <bpelx:toProperties>
+              <bpelx:toProperty name="csf-key" variable="csfKey_Variable"/>
+            </bpelx:toProperties>
+          </invoke><assign name="Assign_OnhandQuantity"><copy><from>$Invoke1_queryAllInventory_OutputVariable.parameters/ns3:result/ns1:QuantityOnHand</from><to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$onhand_quantity</to></copy></assign><if name="QuantityInvalid"><condition>string-length($inputVariable.payload/ns2:inventory_quantity) = 0 or string-length($onhand_quantity)= 0 or $inputVariable.payload/ns2:inventory_quantity &lt;= $onhand_quantity</condition><assign name="Assign_InvalidQuantity">
+              <copy>
+                <from>true()</from>
+                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$flagQuantityInvalid</to>
+              </copy>
+              <copy>
+                <from><literal>"Error con cantidad de inventario inválida. Por favor Validar con el Administrador del Sistema. FlowId:"</literal></from>
+                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$description</to>
+              </copy>
+              <copy>
+                <from><literal>"#params?xi_activation_error= Error con cantidad de inventario inválida. Por favor validar con el Administrador del Sistema..&amp;xi_activation_status=&amp;xa_substatus=error_provisioning"</literal></from>
+                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$data</to>
+              </copy>
+            </assign><else><sequence name="Sequence2"><assign name="Assign_NewValueQuantity">
+                  <copy>
+                    <from>$inputVariable.payload/ns2:inventory_quantity - $onhand_quantity</from>
+                    <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$inputVariable.payload/ns2:quantity</to>
+                  </copy>
+                </assign></sequence></else></if></sequence></sequence><else>
+        <assign name="AssignFalse">
+          <copy>
+            <from><literal>"0"</literal></from>
+            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/ns2:codRespuesta</to>
+          </copy>
+          <copy>
+            <from><literal>"No está vacío"</literal></from>
+            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/ns2:descripcion</to>
+          </copy>
+          <copy>
+            <from><literal>0</literal></from>
+            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/ns2:id</to>
+          </copy>
+        </assign>
+      </else>
+    </if>
+    <if name="EquipmentRecovery" xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
+      <condition>(string-length($inputVariable.payload/ns2:xi_recovery_equipment) = 0 or $inputVariable.payload/ns2:xi_recovery_equipment = "1" ) and $flagQuantityInvalid = false()</condition>
+      <assign name="Assign_InvalidQuantity">
+        <copy>
+          <from>true()</from>
+          <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$flagQuantityInvalid</to>
+        </copy>
+        <copy>
+          <from><literal>"0"</literal></from>
+          <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/ns2:codRespuesta</to>
+        </copy>
+        <copy>
+          <from>$inputVariable.payload/ns2:quantity</from>
+          <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/ns2:id</to>
+        </copy>
+        <copy>
+          <from><literal>"Operación Exitosa"</literal></from>
+          <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/ns2:descripcion</to>
+        </copy>
+      </assign><else>
+         <if name="FlagTrue">
+            <condition>$flagQuantityInvalid = true()</condition>
+            <assign name="Assign_InvokeOutboundInvalidQuantity">
+            <copy>
+              <from>1</from>
+              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/ns2:id</to>
+            </copy>
+            <copy>
+              <from>$data</from>
+              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/ns2:codRespuesta</to>
+            </copy>
+            <copy>
+              <from>$description</from>
+              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/ns2:descripcion</to>
+            </copy>
+          </assign>
+            <else>
+               <assign name="Assign_InvokeOutboundInvalidRecovery">
+              <copy>
+                <from>1</from>
+                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/ns2:id</to>
+              </copy>
+              <copy>
+                <from><literal>"Error con valores de recuperación de equipo. Por favor Validar con el Administrador del Sistema. FlowId:"</literal></from>
+                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/ns2:codRespuesta</to>
+              </copy>
+              <copy>
+                <from><literal>"#params?xi_activation_error= 'Error con valores de  recuperación de equipo. Por favor Validar con el Administrador del Sistema...&amp;xi_activation_status=&amp;xa_substatus=error_provisioning"</literal></from>
+                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/ns2:descripcion</to>
+              </copy>
+            </assign>
+            </else>
+         </if>
+      </else>
+   </if>
+    <!-- Generate reply to synchronous request -->
+    <reply name="replyOutput" partnerLink="bpelprocessscm_client" portType="client:BPELProcessSCM" operation="process" variable="outputVariable"/>
+  </sequence>
+</process>
