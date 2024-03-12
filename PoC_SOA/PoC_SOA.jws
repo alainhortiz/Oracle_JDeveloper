@@ -26,5 +26,6 @@
    </list>
    <list n="listOfChildren">
       <hash><url n="URL" path="ParaPOCInvSCM/ParaPOCInvSCM.jpr"/></hash>
+      <hash><url n="URL" path="PoC_XLST/PoC_XLST.jpr"/></hash>
    </list>
 </jws:workspace>
