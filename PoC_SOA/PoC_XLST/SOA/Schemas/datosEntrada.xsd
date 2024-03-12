@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="windows-1252" ?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:de="http://www.example.org/datosEntrada"
+            targetNamespace="http://www.example.org/datosEntrada" elementFormDefault="qualified">
+  <xsd:element name="request">
+    <xsd:annotation>
+      <xsd:documentation>A sample element</xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element name="xi_warehouse" type="xsd:string"/>
+        <xsd:element name="xi_product_code" type="xsd:string"/>
+        <xsd:element name="xi_subinventory" type="xsd:string"/>
+        <xsd:element name="external_id" type="xsd:string"/>
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:element name="response">
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element name="organizationCode" type="xsd:string"/>
+        <xsd:element name="itemName" type="xsd:string"/>
+        <xsd:element name="treeMode" type="xsd:string"/>
+        <xsd:element name="subinventoryCode" type="xsd:string"/>
+        <xsd:element name="locatorName" type="xsd:string"/>
+        <xsd:element name="concatenacion" type="xsd:string"/>
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+</xsd:schema>
